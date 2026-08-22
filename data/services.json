@@ -1,0 +1,17 @@
+[
+  {
+    "title": "AI Automation",
+    "description": "Systems that work while you sleep — AI workflows that answer, sort, and act around the clock.",
+    "features": ["AI assistants", "Workflow automation", "Document processing", "Lead management"]
+  },
+  {
+    "title": "Website Development",
+    "description": "Always-on digital front doors — fast, modern sites that represent your business 24/7.",
+    "features": ["Business websites", "Landing pages", "SaaS websites", "Dashboard interfaces"]
+  },
+  {
+    "title": "Custom Software",
+    "description": "Infrastructure that doesn't clock out — internal tools and systems engineered to run without babysitting.",
+    "features": ["Internal tools", "AI-powered systems", "Business dashboards"]
+  }
+]

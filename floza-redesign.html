@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Floza — AI Automation & Software Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#07080B;
+    --surface:#0D0F14;
+    --surface-2:#111319;
+    --border:#1B1E27;
+    --border-soft:#151821;
+    --text:#E7E8ED;
+    --text-dim:#8B8F9E;
+    --text-faint:#5A5E6B;
+    --accent:#5468E0;
+    --accent-dim:#3A4A9E;
+    --accent-glow: rgba(84,104,224,0.14);
+
+    --serif: 'Instrument Serif', Georgia, serif;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: 'IBM Plex Mono', 'SF Mono', Menlo, monospace;
+
+    --container: 1180px;
+    --edge: 6vw;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{background:var(--bg);}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--accent-dim);color:#fff;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  :focus-visible{
+    outline:1.5px solid var(--accent);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  .wrap{
+    max-width:var(--container);
+    margin:0 auto;
+    padding:0 var(--edge);
+  }
+
+  /* ---------- texture ---------- */
+  .grain{
+    position:fixed; inset:0; pointer-events:none; z-index:1;
+    opacity:0.035; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .field{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(1200px 700px at 82% -8%, var(--accent-glow), transparent 60%);
+  }
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(7,8,11,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    height:72px;
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--mono); font-size:14px; letter-spacing:0.02em;
+    color:var(--text);
+  }
+  .logo-mark{
+    width:20px; height:20px;
+    border:1px solid var(--text-dim);
+    display:flex; align-items:center; justify-content:center;
+    font-size:11px; color:var(--accent);
+    flex-shrink:0;
+  }
+  .navlinks{
+    display:flex; align-items:center; gap:36px;
+    font-size:14px; color:var(--text-dim);
+  }
+  .navlinks a{
+    position:relative; padding:4px 0;
+    transition:color 0.2s ease;
+  }
+  .navlinks a:hover{color:var(--text);}
+  .navlinks a.active{color:var(--text);}
+  .navlinks a.active::after{
+    content:'';
+    position:absolute; left:0; bottom:-2px;
+    width:100%; height:1px;
+    background:var(--accent);
+  }
+  .navcta{
+    display:flex; align-items:center; gap:20px;
+  }
+  .btn{
+    font-family:var(--sans); font-size:14px; font-weight:500;
+    padding:9px 18px;
+    border:1px solid var(--border);
+    color:var(--text);
+    transition:border-color 0.2s ease, background 0.2s ease;
+    display:inline-flex; align-items:center; gap:8px;
+    white-space:nowrap;
+  }
+  .btn:hover{border-color:var(--text-faint); background:var(--surface-2);}
+  .btn-primary{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+  }
+  .btn-primary:hover{
+    background:#4a5cd0;
+    border-color:#4a5cd0;
+  }
+  .btn-ghost{
+    border:none; padding:9px 4px;
+    color:var(--text-dim);
+  }
+  .btn-ghost:hover{color:var(--text); background:none;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    padding:120px 0 100px;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .eyebrow{
+    font-family:var(--mono); font-size:12.5px; letter-spacing:0.08em;
+    color:var(--accent);
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:28px;
+    text-transform:uppercase;
+  }
+  .eyebrow::before{
+    content:'';
+    width:6px; height:6px; border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 3px rgba(84,104,224,0.18);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:64px;
+    align-items:start;
+  }
+  h1.display{
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:clamp(2.6rem, 4.6vw, 4.1rem);
+    line-height:1.06;
+    letter-spacing:-0.02em;
+    color:var(--text);
+    margin-bottom:26px;
+  }
+  h1.display em{
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:400;
+    color:var(--text);
+    letter-spacing:0;
+  }
+  .hero-sub{
+    font-size:17px;
+    color:var(--text-dim);
+    max-width:480px;
+    line-height:1.6;
+    margin-bottom:40px;
+  }
+  .hero-actions{
+    display:flex; gap:14px; align-items:center;
+    margin-bottom:56px;
+  }
+  .hero-actions .btn{padding:12px 22px; font-size:14.5px;}
+
+  .hero-meta{
+    display:flex; gap:36px;
+    padding-top:28px;
+    border-top:1px solid var(--border-soft);
+  }
+  .hero-meta div{display:flex; flex-direction:column; gap:4px;}
+  .hero-meta .num{
+    font-family:var(--serif); font-size:28px; color:var(--text);
+  }
+  .hero-meta .lbl{
+    font-family:var(--mono); font-size:11px; color:var(--text-faint);
+    letter-spacing:0.04em; text-transform:uppercase;
+  }
+
+  /* ---------- terminal signature ---------- */
+  .terminal{
+    background:var(--surface);
+    border:1px solid var(--border);
+    font-family:var(--mono);
+    font-size:12.5px;
+    position:relative;
+  }
+  .term-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 16px;
+    border-bottom:1px solid var(--border-soft);
+    color:var(--text-faint);
+    font-size:11px;
+    letter-spacing:0.03em;
+  }
+  .term-dots{display:flex; gap:6px;}
+  .term-dots span{width:7px; height:7px; border-radius:50%; background:var(--border);}
+  .term-body{padding:20px;}
+  .term-line{
+    display:flex; gap:12px;
+    padding:9px 0;
+    border-bottom:1px solid var(--border-soft);
+    color:var(--text-dim);
+  }
+  .term-line:last-child{border-bottom:none;}
+  .term-line .t{color:var(--text-faint); flex-shrink:0; width:56px;}
+  .term-line .s{color:var(--accent); flex-shrink:0;}
+  .term-line .m{color:var(--text);}
+  .cursor{
+    display:inline-block; width:6px; height:13px; background:var(--accent);
+    vertical-align:middle; margin-left:4px;
+    animation:blink 1.1s step-end infinite;
+  }
+  @keyframes blink{50%{opacity:0;}}
+
+  /* ---------- section shell ---------- */
+  section{padding:100px 0;}
+  .section-border{border-bottom:1px solid var(--border-soft);}
+  .section-head{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    margin-bottom:64px;
+    align-items:end;
+  }
+  .section-tag{
+    font-family:var(--mono); font-size:11.5px; letter-spacing:0.08em;
+    color:var(--text-faint); text-transform:uppercase;
+    margin-bottom:16px;
+  }
+  h2.section-title{
+    font-family:var(--sans); font-weight:600;
+    font-size:clamp(1.7rem, 2.6vw, 2.3rem);
+    letter-spacing:-0.01em; line-height:1.15;
+    color:var(--text);
+  }
+  h2.section-title em{font-family:var(--serif); font-style:italic; font-weight:400;}
+  .section-desc{
+    color:var(--text-dim); font-size:15.5px; line-height:1.65;
+    max-width:420px;
+  }
+
+  /* ---------- capabilities ---------- */
+  .cap-list{
+    display:flex; flex-direction:column;
+  }
+  .cap-row{
+    display:grid;
+    grid-template-columns:80px 1.1fr 1.4fr;
+    gap:40px;
+    padding:36px 0;
+    border-top:1px solid var(--border-soft);
+    align-items:start;
+    transition:background 0.2s ease;
+  }
+  .cap-list .cap-row:last-child{border-bottom:1px solid var(--border-soft);}
+  .cap-num{
+    font-family:var(--serif); font-size:15px; color:var(--text-faint);
+    padding-top:4px;
+  }
+  .cap-name{
+    font-size:19px; font-weight:600; color:var(--text);
+    letter-spacing:-0.01em;
+  }
+  .cap-name .sub{
+    display:block; margin-top:8px;
+    font-size:14.5px; font-weight:400; color:var(--text-dim);
+    line-height:1.6; max-width:280px;
+  }
+  .cap-tags{
+    display:flex; flex-wrap:wrap; gap:10px; padding-top:6px;
+  }
+  .cap-tag{
+    font-family:var(--mono); font-size:12px; color:var(--text-dim);
+    padding:6px 12px;
+    border:1px solid var(--border);
+  }
+
+  /* ---------- demos ---------- */
+  .demo-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:var(--border-soft);
+    border:1px solid var(--border-soft);
+  }
+  .demo-card{
+    background:var(--bg);
+    padding:32px 28px;
+    display:flex; flex-direction:column; gap:16px;
+    min-height:230px;
+    transition:background 0.25s ease;
+  }
+  .demo-card:hover{background:var(--surface);}
+  .demo-kind{
+    font-family:var(--mono); font-size:11px; letter-spacing:0.05em;
+    color:var(--accent); text-transform:uppercase;
+  }
+  .demo-title{
+    font-size:18px; font-weight:600; color:var(--text);
+    letter-spacing:-0.005em;
+  }
+  .demo-desc{
+    font-size:14px; color:var(--text-dim); line-height:1.6; flex-grow:1;
+  }
+  .demo-link{
+    font-family:var(--mono); font-size:12.5px; color:var(--text);
+    display:flex; align-items:center; gap:8px;
+    padding-top:8px; border-top:1px solid var(--border-soft);
+  }
+  .demo-link svg{transition:transform 0.2s ease;}
+  .demo-card:hover .demo-link svg{transform:translateX(3px);}
+
+  /* ---------- work ---------- */
+  .work-row{
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:64px;
+    padding:44px 0;
+    border-top:1px solid var(--border-soft);
+    align-items:center;
+  }
+  .work-list .work-row:last-child{border-bottom:1px solid var(--border-soft);}
+  .work-meta{display:flex; align-items:baseline; gap:16px; margin-bottom:14px;}
+  .work-year{font-family:var(--mono); font-size:12px; color:var(--text-faint);}
+  .work-type{font-family:var(--mono); font-size:12px; color:var(--accent); text-transform:uppercase; letter-spacing:0.04em;}
+  .work-title{
+    font-size:24px; font-weight:600; color:var(--text);
+    letter-spacing:-0.01em; margin-bottom:10px;
+  }
+  .work-desc{color:var(--text-dim); font-size:15px; line-height:1.65; max-width:420px;}
+  .work-stack{
+    display:flex; flex-wrap:wrap; gap:8px; margin-top:18px;
+  }
+  .work-stack span{
+    font-family:var(--mono); font-size:11.5px; color:var(--text-faint);
+  }
+  .work-stack span:not(:last-child)::after{content:'/'; margin-left:8px; color:var(--border);}
+  .work-visual{
+    background:var(--surface);
+    border:1px solid var(--border);
+    aspect-ratio:16/10;
+    display:flex; align-items:center; justify-content:center;
+    position:relative; overflow:hidden;
+  }
+  .work-visual::before{
+    content:'';
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(var(--border-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border-soft) 1px, transparent 1px);
+    background-size:28px 28px;
+    opacity:0.5;
+  }
+  .work-visual span{
+    font-family:var(--serif); font-style:italic; font-size:15px;
+    color:var(--text-faint); position:relative; z-index:1;
+  }
+
+  /* ---------- cta ---------- */
+  .cta{
+    padding:110px 0;
+    text-align:left;
+  }
+  .cta-inner{
+    display:grid; grid-template-columns:1.3fr 0.7fr;
+    gap:48px; align-items:end;
+    padding-bottom:56px;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .cta h2{
+    font-family:var(--sans); font-weight:600;
+    font-size:clamp(2rem, 3.6vw, 3rem);
+    line-height:1.1; letter-spacing:-0.02em;
+    color:var(--text);
+  }
+  .cta h2 em{font-family:var(--serif); font-style:italic; font-weight:400;}
+  .cta-actions{display:flex; flex-direction:column; gap:14px; align-items:flex-start;}
+  .cta .btn{padding:13px 24px; font-size:14.5px;}
+  .cta-note{font-size:13px; color:var(--text-faint);}
+
+  /* ---------- footer ---------- */
+  footer{padding:64px 0 40px;}
+  .foot-grid{
+    display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr;
+    gap:40px;
+    padding-bottom:48px;
+  }
+  .foot-brand .logo{margin-bottom:16px;}
+  .foot-brand p{color:var(--text-dim); font-size:14px; line-height:1.6; max-width:280px;}
+  .foot-col h4{
+    font-family:var(--mono); font-size:11px; letter-spacing:0.06em;
+    color:var(--text-faint); text-transform:uppercase; margin-bottom:18px;
+  }
+  .foot-col a{
+    display:block; color:var(--text-dim); font-size:14px;
+    margin-bottom:12px; transition:color 0.2s ease;
+  }
+  .foot-col a:hover{color:var(--text);}
+  .foot-bottom{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-top:28px; border-top:1px solid var(--border-soft);
+    font-family:var(--mono); font-size:12px; color:var(--text-faint);
+  }
+
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr; gap:48px;}
+    .section-head{grid-template-columns:1fr; gap:20px;}
+    .cap-row{grid-template-columns:1fr; gap:16px;}
+    .demo-grid{grid-template-columns:1fr;}
+    .work-row{grid-template-columns:1fr; gap:24px;}
+    .foot-grid{grid-template-columns:1fr 1fr; gap:32px;}
+    .navlinks{display:none;}
+    .hero-meta{flex-wrap:wrap; gap:24px;}
+    .cta-inner{grid-template-columns:1fr; gap:28px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="field"></div>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a href="#" class="logo">
+        <span class="logo-mark">F</span>
+        FLOZA
+      </a>
+      <div class="navlinks">
+        <a href="#" class="active">Home</a>
+        <a href="#services">Services</a>
+        <a href="#experience">Experience</a>
+        <a href="#demos">Demos</a>
+        <a href="#work">Projects</a>
+      </div>
+      <div class="navcta">
+        <a href="#contact" class="btn btn-ghost">Contact</a>
+        <a href="#contact" class="btn btn-primary">Start a Project</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">AI Automation &amp; Software Studio</div>
+          <h1 class="display">Build smarter<br><em>workflows</em> with AI.</h1>
+          <p class="hero-sub">Floza designs AI-powered automations, websites, and software systems that help businesses work faster — fewer manual steps, fewer dropped leads, more time for the work that matters.</p>
+          <div class="hero-actions">
+            <a href="#demos" class="btn btn-primary">Explore Demos</a>
+            <a href="#contact" class="btn">Start a Project</a>
+          </div>
+          <div class="hero-meta">
+            <div><span class="num">03</span><span class="lbl">Core Disciplines</span></div>
+            <div><span class="num">24/7</span><span class="lbl">Systems Running</span></div>
+            <div><span class="num">100%</span><span class="lbl">Custom Built</span></div>
+          </div>
+        </div>
+
+        <div class="terminal">
+          <div class="term-head">
+            <span>automation_pipeline.log</span>
+            <div class="term-dots"><span></span><span></span><span></span></div>
+          </div>
+          <div class="term-body">
+            <div class="term-line"><span class="t">00:00:01</span><span class="s">→</span><span class="m">Customer inquiry received</span></div>
+            <div class="term-line"><span class="t">00:00:02</span><span class="s">→</span><span class="m">AI parsing request context</span></div>
+            <div class="term-line"><span class="t">00:00:03</span><span class="s">→</span><span class="m">Intent matched · workflow selected</span></div>
+            <div class="term-line"><span class="t">00:00:04</span><span class="s">→</span><span class="m">Automation executing<span class="cursor"></span></span></div>
+            <div class="term-line"><span class="t">00:00:05</span><span class="s">✓</span><span class="m">Result delivered · record stored</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section-border" id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">What we build</div>
+          <h2 class="section-title">Three ways we remove<br><em>repetitive work.</em></h2>
+        </div>
+        <p class="section-desc">Every engagement starts the same way — understanding where time actually goes, then building the system that gets it back.</p>
+      </div>
+
+      <div class="cap-list">
+        <div class="cap-row">
+          <div class="cap-num">01</div>
+          <div>
+            <div class="cap-name">AI Automation
+              <span class="sub">Intelligent workflows that handle the repetitive parts of running a business.</span>
+            </div>
+          </div>
+          <div class="cap-tags">
+            <span class="cap-tag">AI Assistants</span>
+            <span class="cap-tag">Workflow Automation</span>
+            <span class="cap-tag">Document Processing</span>
+            <span class="cap-tag">Lead Management</span>
+          </div>
+        </div>
+
+        <div class="cap-row">
+          <div class="cap-num">02</div>
+          <div>
+            <div class="cap-name">Website Development
+              <span class="sub">Modern, fast sites built for the businesses and customers actually using them.</span>
+            </div>
+          </div>
+          <div class="cap-tags">
+            <span class="cap-tag">Business Websites</span>
+            <span class="cap-tag">Landing Pages</span>
+            <span class="cap-tag">SaaS Websites</span>
+            <span class="cap-tag">Dashboard Interfaces</span>
+          </div>
+        </div>
+
+        <div class="cap-row">
+          <div class="cap-num">03</div>
+          <div>
+            <div class="cap-name">Custom Software
+              <span class="sub">Internal tools and systems shaped around how your team actually works.</span>
+            </div>
+          </div>
+          <div class="cap-tags">
+            <span class="cap-tag">Internal Tools</span>
+            <span class="cap-tag">AI-Powered Systems</span>
+            <span class="cap-tag">Business Dashboards</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMOS -->
+  <section class="section-border" id="demos">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">See it running</div>
+          <h2 class="section-title">Automation in <em>action.</em></h2>
+        </div>
+        <p class="section-desc">Interactive versions of the systems we build for businesses — try them the way a customer would.</p>
+      </div>
+
+      <div class="demo-grid">
+        <a href="#" class="demo-card">
+          <span class="demo-kind">AI Agent</span>
+          <span class="demo-title">AI Business Assistant</span>
+          <p class="demo-desc">An assistant that answers customer questions instantly and captures leads while it talks.</p>
+          <span class="demo-link">Try the demo <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.3"/></svg></span>
+        </a>
+        <a href="#" class="demo-card">
+          <span class="demo-kind">Automation</span>
+          <span class="demo-title">Document Processing</span>
+          <p class="demo-desc">Upload documents and watch AI extract structured information automatically.</p>
+          <span class="demo-link">Try the demo <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.3"/></svg></span>
+        </a>
+        <a href="#" class="demo-card">
+          <span class="demo-kind">Workflow</span>
+          <span class="demo-title">Lead Qualification CRM</span>
+          <p class="demo-desc">Incoming leads are automatically scored, qualified, and organized — no manual sorting.</p>
+          <span class="demo-link">Try the demo <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.3"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="section-border" id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">Recent work</div>
+          <h2 class="section-title">Built for real<br><em>business problems.</em></h2>
+        </div>
+        <p class="section-desc">Systems, websites, and automations shipped for teams who needed them to just work.</p>
+      </div>
+
+      <div class="work-list">
+        <div class="work-row">
+          <div>
+            <div class="work-meta"><span class="work-year">2026</span><span class="work-type">AI Automation</span></div>
+            <div class="work-title">Inbound Lead Router</div>
+            <p class="work-desc">Replaced a manual triage inbox with an AI system that reads, scores, and routes every incoming lead to the right rep in under a minute.</p>
+            <div class="work-stack"><span>Next.js</span><span>OpenAI</span><span>Postgres</span></div>
+          </div>
+          <div class="work-visual"><span>Case study 01</span></div>
+        </div>
+
+        <div class="work-row">
+          <div>
+            <div class="work-meta"><span class="work-year">2025</span><span class="work-type">Custom Software</span></div>
+            <div class="work-title">Operations Dashboard</div>
+            <p class="work-desc">A single internal view replacing four spreadsheets, giving an operations team live visibility into every open job.</p>
+            <div class="work-stack"><span>React</span><span>Node</span><span>Supabase</span></div>
+          </div>
+          <div class="work-visual"><span>Case study 02</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="contact">
+    <div class="wrap">
+      <div class="cta-inner">
+        <h2>Have a process that<br>needs to <em>run itself?</em></h2>
+        <div class="cta-actions">
+          <a href="mailto:hello@floza.com" class="btn btn-primary">Contact Floza</a>
+          <span class="cta-note">Usually replies within one business day.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#" class="logo"><span class="logo-mark">F</span>FLOZA</a>
+        <p>Floza builds AI-powered automations, websites, and software systems that help businesses work faster.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Explore</h4>
+        <a href="#">Home</a>
+        <a href="#services">Services</a>
+        <a href="#experience">Experience</a>
+        <a href="#demos">Demos</a>
+        <a href="#work">Projects</a>
+      </div>
+      <div class="foot-col">
+        <h4>Services</h4>
+        <a href="#services">AI Automation</a>
+        <a href="#services">Website Development</a>
+        <a href="#services">Custom Software</a>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <a href="mailto:hello@floza.com">hello@floza.com</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Floza. All rights reserved.</span>
+      <span>Turn manual tasks into intelligent systems.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

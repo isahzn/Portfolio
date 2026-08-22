@@ -1,0 +1,203 @@
+@import "tailwindcss";
+
+/*
+ * Floza brand design tokens — dark editorial system (floza-redesign.html,
+ * docs/01_BRAND_GUIDE.MD). Near-black background, indigo accent #5468E0,
+ * hairline borders. Tailwind v4 exposes these as utilities:
+ * bg-background, text-primary, border-border-soft/30, etc.
+ */
+@theme {
+  --color-background: #07080b;
+  --color-foreground: #e7e8ed;
+  --color-muted: #8b8f9e;
+  --color-faint: #5a5e6b;
+  --color-surface: #0d0f14;
+  --color-surface-2: #111319;
+  --color-border: #1b1e27;
+  --color-border-soft: #151821;
+  --color-primary: #5468e0;
+  --color-primary-dim: #3a4a9e;
+  --color-secondary: #7c8cf5;
+  /* Green "online" accent — uptime badges, live status dots (24/7 system). */
+  --color-online: #34d399;
+
+  /* Motion tokens — used via `animate-overlay-in` / `animate-panel-in` */
+  --animate-overlay-in: overlay-in 0.2s ease-out;
+  --animate-panel-in: panel-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  @keyframes overlay-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+}
+
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-plex-mono);
+  --font-serif: var(--font-instrument-serif);
+}
+
+/* ---------- ambient texture (floza-redesign.html) ---------- */
+
+/* Film grain — fixed overlay, blends with the page behind it. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Accent field — indigo glow bleeding from the top-right corner. */
+.field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    1200px 700px at 82% -8%,
+    color-mix(in srgb, var(--color-primary) 14%, transparent),
+    transparent 60%
+  );
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-primary-dim) 90%, transparent);
+  color: #fff;
+}
+
+/* ---------- typography / section conventions ---------- */
+
+@layer components {
+  /* Serif italic accent used inside headings (em). */
+  .serif-em {
+    font-family: var(--font-instrument-serif);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* Hero eyebrow — mono label with a glowing dot. */
+  .eyebrow {
+    @apply flex items-center gap-2.5 font-mono text-[12.5px] uppercase tracking-[0.08em] text-primary;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: var(--color-primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 18%, transparent);
+  }
+
+  /* Section heading tag (mono, faint, uppercase). */
+  .section-tag {
+    @apply font-mono text-[11.5px] uppercase tracking-[0.08em] text-faint;
+  }
+
+  /* Editorial section title — em spans render in the serif. */
+  .section-title {
+    @apply text-3xl font-semibold text-foreground sm:text-4xl;
+    letter-spacing: -0.01em;
+  }
+  .section-title em {
+    font-family: var(--font-instrument-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .section-subtitle {
+    @apply text-[15.5px] leading-relaxed text-muted;
+  }
+
+  /* Gradient accent — used by the admin shell wordmark. */
+  .text-gradient {
+    @apply bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+
+  /* Two-column section head (tag/title left, description right). */
+  .section-head {
+    @apply mb-14 grid items-end gap-6 md:grid-cols-2 md:gap-10;
+  }
+}
+
+/* Blinking terminal cursor (hero signature panel). */
+.term-cursor {
+  display: inline-block;
+  width: 6px;
+  height: 13px;
+  vertical-align: middle;
+  margin-left: 4px;
+  background: var(--color-primary);
+  animation: term-blink 1.1s step-end infinite;
+}
+@keyframes term-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Green "online" indicator — pulsing status dot with a soft glow (24/7
+   reliability system: uptime badges, Live Now dots, Always Online). */
+.live-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--color-online);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-online) 18%, transparent);
+  animation: live-pulse 2.2s ease-in-out infinite;
+}
+@keyframes live-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* Grid pattern used behind work-row visuals. */
+.grid-pattern {
+  background-image: linear-gradient(var(--color-border-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-border-soft) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/*
+ * Accessibility: respect users who disable motion (docs/01_BRAND_GUIDE.MD).
+ * Neutralizes the CSS animations/transitions defined across the site.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

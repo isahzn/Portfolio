@@ -1,0 +1,122 @@
+[
+  {
+    "id": "invoice-automation",
+    "title": "Invoice Automation System",
+    "category": "AI Automation",
+    "shortDescription": "An AI workflow that reads invoices, extracts the data, and organizes it automatically.",
+    "image": "/projects/invoice-automation.png",
+    "featured": true,
+    "slug": "invoice-automation",
+    "problem": "An accounting team spent hours every week opening invoices, reading them, and retyping the data into their accounting system — a slow process that was prone to errors and scaled poorly as the business grew.",
+    "solution": "Floza built an AI workflow that reads incoming invoices, extracts the key fields, and writes structured data straight into the accounting system. The team only reviews the exceptions the system flags.",
+    "workflow": [
+      "Invoice received by email",
+      "AI extracts fields (amount, date, vendor)",
+      "Data validated and written to the accounting system",
+      "Exceptions flagged for human review"
+    ],
+    "screenshots": [],
+    "results": [
+      "Hours of manual data entry removed every week",
+      "Fewer data-entry errors",
+      "Invoices processed in minutes instead of days"
+    ],
+    "technologies": ["Next.js", "AI document extraction", "Automation workflow", "Cloud storage"]
+  },
+  {
+    "id": "lead-qualification-crm",
+    "title": "AI Lead Qualification CRM",
+    "category": "AI Automation",
+    "shortDescription": "A system that talks to prospects, qualifies them, and organizes every lead in a CRM.",
+    "image": "/projects/lead-qualification-crm.png",
+    "featured": true,
+    "slug": "lead-qualification-crm",
+    "problem": "A service business received dozens of inquiries a day but had no system for sorting them. Good leads went cold while the team chased inquiries that were never going to convert.",
+    "solution": "Floza created a qualification workflow that talks to prospects, asks the right questions, scores every lead, and organizes them in a simple CRM with clear follow-up priorities.",
+    "workflow": [
+      "Inquiry arrives from the website or chat",
+      "AI asks qualification questions",
+      "Lead is scored and categorized",
+      "CRM entry created with next steps"
+    ],
+    "screenshots": [],
+    "results": [
+      "Every lead captured and organized automatically",
+      "Sales team focuses on the hottest leads first",
+      "No follow-ups forgotten"
+    ],
+    "technologies": ["Next.js", "AI agent", "CRM automation", "Webhook integrations"]
+  },
+  {
+    "id": "accounting-dashboard",
+    "title": "Business Reporting Dashboard",
+    "category": "Dashboard",
+    "shortDescription": "A custom dashboard that centralizes business data and reporting in one place.",
+    "image": "/projects/accounting-dashboard.png",
+    "featured": false,
+    "slug": "accounting-dashboard",
+    "problem": "Financial data lived in spreadsheets and separate tools, so getting a clear picture of the business meant hours of manual consolidation at the end of every month.",
+    "solution": "Floza built a custom dashboard that pulls the business's data into one place, with clean reporting views the whole team can read at a glance.",
+    "workflow": [
+      "Data sources connected",
+      "Data synced and normalized",
+      "Reports generated automatically",
+      "Team views the dashboard"
+    ],
+    "screenshots": [],
+    "results": [
+      "One place for the numbers",
+      "Reports ready without manual work",
+      "Decisions made from current data"
+    ],
+    "technologies": ["Next.js", "Database", "Reporting", "Cloud hosting"]
+  },
+  {
+    "id": "accounting-firm-website",
+    "title": "Accounting Firm Website",
+    "category": "Website",
+    "shortDescription": "A modern business website that turns visitors into booked consultations.",
+    "image": "/projects/accounting-firm-website.png",
+    "featured": true,
+    "slug": "accounting-firm-website",
+    "problem": "An accounting firm's outdated website didn't explain their services clearly and wasn't driving inquiries, so most new clients came from word of mouth.",
+    "solution": "Floza designed and built a modern business website that explains their services, builds trust with clear content, and guides visitors toward booking a consultation.",
+    "workflow": [
+      "Requirements workshop",
+      "Design and content structure",
+      "Build and launch",
+      "Analytics and optimization"
+    ],
+    "screenshots": [],
+    "results": [
+      "Clear, professional online presence",
+      "More inquiries through the site",
+      "Easy to update without technical help"
+    ],
+    "technologies": ["Next.js", "Tailwind CSS", "SEO", "Vercel"]
+  },
+  {
+    "id": "ai-support-agent",
+    "title": "AI Customer Support Agent",
+    "category": "AI Agent",
+    "shortDescription": "An AI assistant that answers common questions instantly and escalates complex cases.",
+    "image": "/projects/ai-support-agent.png",
+    "featured": false,
+    "slug": "ai-support-agent",
+    "problem": "A growing online business was answering the same customer questions repeatedly, leaving the team little time for complex or high-value requests.",
+    "solution": "Floza built an AI support assistant trained on the business's information that answers common questions instantly, collects important details, and escalates complex cases to the team.",
+    "workflow": [
+      "Customer message arrives",
+      "AI understands and answers",
+      "Details captured for the team",
+      "Complex cases escalated"
+    ],
+    "screenshots": [],
+    "results": [
+      "Instant answers for common questions",
+      "Support team freed for complex cases",
+      "Consistent responses around the clock"
+    ],
+    "technologies": ["Next.js", "AI assistant", "Knowledge base", "Messaging integration"]
+  }
+]

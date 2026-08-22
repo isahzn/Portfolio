@@ -1,0 +1,30 @@
+[
+  {
+    "id": "ai-assistant",
+    "title": "AI Business Assistant",
+    "category": "AI Agent",
+    "description": "Answers your customers 24/7 and captures leads while you sleep.",
+    "route": "/demos/ai-assistant"
+  },
+  {
+    "id": "document-processing",
+    "title": "Document Processing",
+    "category": "Automation",
+    "description": "Processes every PDF the moment it arrives — no matter when that is.",
+    "route": "/demos/document-processing"
+  },
+  {
+    "id": "lead-crm",
+    "title": "Lead Qualification CRM",
+    "category": "Workflow",
+    "description": "Scores and routes leads instantly, around the clock.",
+    "route": "/demos/lead-crm"
+  },
+  {
+    "id": "voice-project-intake",
+    "title": "Voice Project Intake Agent",
+    "category": "Voice AI",
+    "description": "Speak your project details and watch an AI agent capture them into a live project brief.",
+    "route": "/demos/voice-project-intake"
+  }
+]
