@@ -36,14 +36,14 @@ export function ContrastSection() {
           </p>
         </div>
 
-        <div className="grid gap-px border border-border-soft bg-border-soft md:grid-cols-2">
+        <div className="grid gap-px rounded-[14px] border border-border-soft bg-border-soft md:grid-cols-2">
           {/* The 9-5 side */}
-          <div className="flex flex-col gap-6 bg-background p-8 sm:p-10">
+          <div className="flex flex-col gap-6 bg-background p-9 sm:p-10">
             <div className="flex items-center justify-between">
               <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-faint">
                 Manual processes
               </span>
-              <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-red-300/60">
+              <span className="rounded-full border border-red-500/10 bg-red-500/8 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.06em] text-red-400/60">
                 9-5
               </span>
             </div>
@@ -53,7 +53,7 @@ export function ContrastSection() {
             <ul className="flex flex-col gap-3.5">
               {manualPoints.map((point) => (
                 <li key={point} className="flex gap-3 text-sm leading-relaxed text-muted">
-                  <span aria-hidden="true" className="mt-px shrink-0 text-red-300/50">
+                  <span aria-hidden="true" className="mt-px shrink-0 text-red-400/50">
                     ✕
                   </span>
                   {point}
@@ -63,13 +63,13 @@ export function ContrastSection() {
           </div>
 
           {/* The 24/7 side */}
-          <div className="flex flex-col gap-6 bg-surface p-8 sm:p-10">
+          <div className="flex flex-col gap-6 bg-surface p-9 sm:p-10">
             <div className="flex items-center justify-between">
               <span className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.08em] text-online">
                 <span className="live-dot" aria-hidden="true" />
                 Floza automation
               </span>
-              <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-online">
+              <span className="rounded-full border border-online/15 bg-online/10 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.06em] text-online">
                 24/7
               </span>
             </div>

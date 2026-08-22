@@ -6,10 +6,10 @@ import { FooterContact } from "@/components/site/footer-contact";
 
 const exploreLinks = [
   { href: "/", label: "Home" },
-  { href: "/demos", label: "Try It Out" },
-  { href: "/projects", label: "Case Studies" },
   { href: "/services", label: "Services" },
-  { href: "/experience", label: "Past Projects" },
+  { href: "/experience", label: "Experience" },
+  { href: "/demos", label: "Demos" },
+  { href: "/projects", label: "Projects" },
   { href: "/contact", label: "Contact" },
 ];
 

@@ -3,9 +3,8 @@ import { PageContainer } from "@/components/layout/page-container";
 import { LiveCounter } from "@/components/site/live-status";
 
 /**
- * Final conversion CTA (docs/08_CONTENT_PLAN.MD, 24/7 redesign brief) — a
- * large editorial statement used at the bottom of the homepage and services
- * page, with a live "automations processed" counter ticking next to it.
+ * Final conversion CTA — large editorial statement with a live
+ * "automations processed" counter ticking next to it.
  */
 export function ContactCta() {
   return (
